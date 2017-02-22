@@ -17,16 +17,16 @@ var jqGridDefaultConfig = {
         totalrows: "totalrows" // 表示需从Server得到总共多少行数据的参数名称，参见jqGrid选项中的rowTotal  
     },//请求参数配置
     jsonReader: {
-        root: "rows",   // json中代表实际模型数据的入口  
-        page: "page",   // json中代表当前页码的数据  
-        total: "total", // json中代表页码总数的数据  
-        records: "records", // json中代表数据行总数的数据  
+        root: "Rows",   // json中代表实际模型数据的入口  
+        page: "PageIndex",   // json中代表当前页码的数据  
+        total: "TotalPage", // json中代表页码总数的数据  
+        records: "TotalRows", // json中代表数据行总数的数据  
         repeatitems: false, // 如果设为false，则jqGrid在解析json时，会根据name来搜索对应的数据元素（即可以json中元素可以不按顺序）；而所使用的name是来自于colModel中的name设定。  
         cell: "cell",
         id: "id",
         userdata: "userdata",
         subgrid: {
-            root: "rows",
+            root: "Rows",
             repeatitems: true,
             cell: "cell"
         }

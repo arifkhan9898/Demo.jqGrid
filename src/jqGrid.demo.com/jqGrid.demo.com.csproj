@@ -117,14 +117,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.ui\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\jquery.ui\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\jquery.ui\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\jquery.ui\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\jquery.ui\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\jquery.ui\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jqGrid\css\ellipsis-xbl.xml" />
     <Content Include="Content\jqGrid\css\ui.jqgrid.css" />
+    <Content Include="Content\jquery.ui\jquery-ui.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Script\jqGrid\i18n\grid.locale-cn.js" />
     <Content Include="Script\jqGrid\i18n\grid.locale-en.js" />
     <Content Include="Script\jqGrid\jqGrid.extend.js" />
     <Content Include="Script\jqGrid\jquery.jqGrid.min.js" />
     <Content Include="Script\jquery-1.7.2.min.js" />
+    <Content Include="Script\jquery-ui.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

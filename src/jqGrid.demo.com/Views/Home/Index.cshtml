@@ -1,22 +1,62 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>jqGrid-Demo</title>
     <link href="@Url.Content("~/Content/jqGrid/css/ui.jqgrid.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/jquery.ui/jquery-ui.min.css")" rel="stylesheet" />
+
     <script src="@Url.Content("~/Script/jquery-1.7.2.min.js")"></script>
     <script src="@Url.Content("~/Script/jqGrid/i18n/grid.locale-cn.js")"></script>
     <script src="@Url.Content("~/Script/jqGrid/jqGrid.extend.js")"></script>
     <script src="@Url.Content("~/Script/jqGrid/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Script/jquery-ui.min.js")"></script>
 </head>
 <body>
-    <div>
-    </div>
+    <form id="formData">
+        <input type="button" onclick="Init()" value="搜索" />
+        <div id="list">
+            <table id="grid"></table>
+            <div id="pager"></div>
+        </div>
+    </form>
+    <script>
+        function Init() {
+            var url = '@Url.Action("List")';
+            var colNames = ['Id'];
+            var colModel = [
+                { name: 'Id', index: 'Id', width: 80, align: "center" }
+            ];
+            $("#list #grid").jqGrid(
+            {
+                url: url,
+                mtype: 'POST',
+                ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+                serializeGridData: function (postData) {
+                    if (postData.searchField === undefined) postData.searchField = null;
+                    if (postData.searchString === undefined) postData.searchString = null;
+                    if (postData.searchOper === undefined) postData.searchOper = null;
+                    return JSON.stringify(postData);
+                },
+                jsonReader: jqGridDefaultConfig.jsonReader,
+                prmNames: jqGridDefaultConfig.prmNames,
+                datatype: "json",
+                colNames: colNames,
+                colModel: colModel,
+                rowNum: 10,
+                rowList: [10, 15, 20, 25, 40],
+                pager: '#pager',
+                viewrecords: true,
+                sortorder: "desc",
+                width: 900,
+                height: 240
+            });
+
+            $("#list #grid").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        }
+    </script>
 </body>
 </html>
