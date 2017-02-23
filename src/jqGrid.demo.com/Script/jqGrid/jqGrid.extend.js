@@ -1,8 +1,8 @@
 ﻿//配置参考文档 http://blog.csdn.net/yangbobo1992/article/details/7930040
 var jqGridDefaultConfig = {
     prmNames: {
-        page: "page",    // 表示请求页码的参数名称  
-        rows: "rows",    // 表示请求行数的参数名称  
+        page: "PageIndex",    // 表示请求页码的参数名称  
+        rows: "PageSize",    // 表示请求行数的参数名称  
         sort: "sidx", // 表示用于排序的列名的参数名称  
         order: "sord", // 表示采用的排序方式的参数名称
         search: "_search", // 表示是否是搜索请求的参数名称  
