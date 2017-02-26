@@ -6,6 +6,18 @@ namespace jqGrid.demo.com.Controllers
 {
     public class HomeController : Controller
     {
+
+        public HomeController()
+        {
+            DataSource = new List<ReturnViewModel>();
+            for (var i = 0; i < 101; i++)
+            {
+                DataSource.Add(new ReturnViewModel() { Id = i, Name = "名称" + i + 1, ParentId = i > 20 ? i % 20 : -1 });
+            }
+        }
+
+        public List<ReturnViewModel> DataSource { get; set; }
+
         protected virtual void BindParam(GridParamModel model)
         {
             if (model.PageIndex < 1) model.PageIndex = 1;
@@ -13,19 +25,14 @@ namespace jqGrid.demo.com.Controllers
         }
 
         // GET: Home
-        public ActionResult Index(GridParamModel model)
+        public ActionResult Index(HomeSearchGridParamModel model)
         {
             return View(model);
         }
 
-        public ActionResult List(GridParamModel model)
+        public ActionResult List(HomeSearchGridParamModel model)
         {
-            var list = new List<ReturnViewModel>();
-            for (var i = 0; i < 101; i++)
-            {
-                list.Add(new ReturnViewModel() { Id = i, Name = "名称" + i + 1 });
-            }
-
+            var list = DataSource.Where(p => p.ParentId == model.ParentId).ToList();
             var rows = list.Skip((model.PageIndex - 1) * model.PageSize).Take(model.PageSize).ToArray();
             var result = new GridReturnModel
             {
@@ -43,6 +50,8 @@ namespace jqGrid.demo.com.Controllers
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public int ParentId { get; set; }
     }
 
     /// <summary>
@@ -60,5 +69,14 @@ namespace jqGrid.demo.com.Controllers
         public int TotalPage { get; set; }
         public dynamic Rows { get; set; }
         public int TotalRows { get; set; }
+    }
+
+
+    public class HomeSearchGridParamModel : GridParamModel
+    {
+        /// <summary>
+        /// 父级ID
+        /// </summary>
+        public int ParentId { get; set; }
     }
 }

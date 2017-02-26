@@ -17,18 +17,39 @@
 </head>
 <body>
     <form id="formData">
-        <input type="button" onclick="Init()" value="搜索" />
+        <input type="hidden" name="ParentId" attribute-search="true" value="-1"/>
+        <select onchange="$('input[name=ParentId]').val($(this).val())">
+            <option>-1</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <input type="button" onclick="Search()" value="搜索" />
         <div id="list">
             <table id="grid"></table>
             <div id="pager"></div>
         </div>
     </form>
     <script>
+        function GetFormJsonObj() {
+            var jsonObj = {};
+            $("#formData :input[attribute-search=true]").each(function () {
+                if ($(this).val()) {
+                    jsonObj[$(this).attr("name")] = $(this).val();
+                }
+            });
+            return jsonObj;
+        }
+
         function Init() {
             var url = '@Url.Action("List")';
-            var colNames = ['Id'];
+            var colNames = ['Id', '名称', '父级'];
             var colModel = [
-                { name: 'Id', index: 'Id', width: 80, align: "center" }
+                { name: 'Id', index: 'Id', width: 80, align: "center" },
+                { name: 'Name', index: 'Name', width: 80, align: "center" },
+                { name: 'ParentId', index: 'ParentId', width: 80, align: "center" }
             ];
             $("#list #grid").jqGrid(
             {
@@ -46,6 +67,7 @@
                 datatype: "json",
                 colNames: colNames,
                 colModel: colModel,
+                postData: GetFormJsonObj(),
                 rowNum: 10,
                 rowList: [10, 15, 20, 25, 40],
                 pager: '#pager',
@@ -54,9 +76,22 @@
                 width: 900,
                 height: 240
             });
-
             $("#list #grid").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
         }
+        function Search() {
+            //Init();
+            $("#list #grid")
+                .jqGrid("setGridParam", {
+                    //search: true,
+                    page: 1,
+                    postData: GetFormJsonObj()
+                })
+                .trigger("reloadGrid");
+        }
+
+        $(function() {
+            Init();
+        });
     </script>
 </body>
 </html>
