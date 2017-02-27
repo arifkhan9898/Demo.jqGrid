@@ -34,7 +34,7 @@ var jqGridDefaultConfig = {
 }
 function FormToJson(formId) {
     var jsonObj = {};
-    $("#"+formId+" :[attribute-search=true]").each(function () {
+    $("#" + formId).find("[attribute-search=true]").each(function () {
         if ($(this).val()) {
             jsonObj[$(this).attr("name")] = $(this).val();
         }
