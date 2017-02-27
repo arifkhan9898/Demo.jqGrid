@@ -32,3 +32,12 @@ var jqGridDefaultConfig = {
         }
     }//返回参数配置
 }
+function FormToJson(formId) {
+    var jsonObj = {};
+    $("#"+formId+" :[attribute-search=true]").each(function () {
+        if ($(this).val()) {
+            jsonObj[$(this).attr("name")] = $(this).val();
+        }
+    });
+    return jsonObj;
+}//form表单内带有attribute-search=true的标签数据组合成json对象

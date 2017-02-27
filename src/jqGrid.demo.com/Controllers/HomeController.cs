@@ -10,9 +10,9 @@ namespace jqGrid.demo.com.Controllers
         public HomeController()
         {
             DataSource = new List<ReturnViewModel>();
-            for (var i = 0; i < 101; i++)
+            for (var i = 0; i < 10001; i++)
             {
-                DataSource.Add(new ReturnViewModel() { Id = i, Name = "名称" + i + 1, ParentId = i > 20 ? i % 20 : -1 });
+                DataSource.Add(new ReturnViewModel() { Id = i + 1, Name = "名称" + i + 1, ParentId = i > 20 ? i % 20 + 1 : -1 });
             }
         }
 
@@ -43,6 +43,17 @@ namespace jqGrid.demo.com.Controllers
             };
             return Json(result);
         }
+        /// <summary>
+        /// 子父级测试
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ActionResult SubIndex(HomeSearchGridParamModel model)
+        {
+            return View(model); 
+        }
+
+
     }
 
     public class ReturnViewModel

@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>jqGrid-grid</title>
+    <title>jqGrid-subgrid</title>
     <link href="@Url.Content("~/Content/jqGrid/css/ui.jqgrid.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/jquery.ui-1.8.16/jquery-ui.custom.css")" rel="stylesheet" />
 
@@ -13,7 +13,27 @@
     <script src="@Url.Content("~/Script/jqGrid/i18n/grid.locale-cn.js")"></script>
     <script src="@Url.Content("~/Script/jqGrid/jqGrid.extend.js")"></script>
     <script src="@Url.Content("~/Script/jqGrid/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Script/jquery-ui.min.js")"></script>
+    <style type="text/css">
+        @@CHARSET "UTF-8";
+
+        body {
+        }
+
+        .codestr {
+            font-size: 12px;
+            font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+        }
+
+        .codetitle {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 36px;
+        }
+
+        .notes {
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
     <form id="formData">
@@ -52,9 +72,9 @@
             var url = '@Url.Action("List")';
             var colNames = ['Id', '名称', '父级'];
             var colModel = [
-                { name: 'Id', index: 'Id', width: 80, align: "center" },
-                { name: 'Name', index: 'Name', width: 80, align: "center" },
-                { name: 'ParentId', index: 'ParentId', width: 80, align: "center" }
+                { name: 'Id', index: 'Id', width: '200px', align: "center" },
+                { name: 'Name', index: 'Name', width: '200px', align: "center" },
+                { name: 'ParentId', index: 'ParentId', width: '200px', align: "center" }
             ];
             $("#list #grid").jqGrid(
             {
@@ -78,8 +98,34 @@
                 pager: '#pager',
                 viewrecords: true,
                 sortorder: "desc",
-                width: 900,
-                height: 240
+                height: 300,
+                subGrid: true,//开启子级
+                subGridRowExpanded: function (subgrid_id, row_id) {
+                    var subgrid_table_id, pager_id;
+                    subgrid_table_id = subgrid_id + "_t";
+                    pager_id = "p_" + subgrid_table_id;
+                    $("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><div id='" + pager_id + "' class='scroll'></div>");
+                    $("#" + subgrid_table_id).jqGrid({
+                        url: url,
+                        mtype: 'POST',
+                        datatype: "json",
+                        jsonReader: jqGridDefaultConfig.jsonReader,
+                        prmNames: jqGridDefaultConfig.prmNames,
+                        colNames: colNames,
+                        colModel: colModel,
+                        rowNum: 2,
+                        rowList: [2, 4, 6, 8, 10],
+                        pager: pager_id,
+                        sortname: 'num',
+                        sortorder: "asc",
+                        height: '100%',
+                        width: '100%',
+                        postData: {
+                            ParentId: row_id
+                        }
+                    });
+                    $("#" + subgrid_table_id).jqGrid('navGrid', "#" + pager_id, { edit: false, add: false, del: false })
+                }
             });
             $("#list #grid").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
         }
