@@ -89,7 +89,7 @@
                 },
                 jsonReader: jqGridDefaultConfig.jsonReader,
                 prmNames: jqGridDefaultConfig.prmNames,
-                datatype: "json",
+                datatype: "local",
                 colNames: colNames,
                 colModel: colModel,
                 postData: FormToJson("formData"),
@@ -135,6 +135,7 @@
                 .jqGrid("setGridParam", {
                     //search: true,
                     page: 1,
+                    datatype: "json",
                     postData: FormToJson("formData")
                 })
                 .trigger("reloadGrid");
