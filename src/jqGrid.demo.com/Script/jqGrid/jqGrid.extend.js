@@ -36,7 +36,10 @@ function FormToJson(formId) {
     var jsonObj = {};
     $($("#" + formId).serializeArray()).each(function (i, o) {
         if (o.value) {
-            jsonObj[o.name] = o.value;
+            if (jsonObj[o.name]) {
+                jsonObj[o.name] = jsonObj[o.name] + ',' + o.value;
+            }
+            else { jsonObj[o.name] = o.value; }
         }
     });
     return jsonObj;
