@@ -53,6 +53,16 @@ namespace jqGrid.demo.com.Controllers
             return View(model); 
         }
 
+        /// <summary>
+        /// 动态表头
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ActionResult DynamicHeadSub(HomeSearchGridParamModel model)
+        {
+            return View(model);
+        }
+
 
     }
 

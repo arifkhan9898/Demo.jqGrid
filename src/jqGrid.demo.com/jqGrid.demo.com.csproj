@@ -166,6 +166,7 @@
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\SubIndex.cshtml" />
+    <Content Include="Views\Home\DynamicHeadSub.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
